@@ -4,6 +4,7 @@ import com.alikmndlu.msscbeerservice.model.BeerDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
@@ -20,12 +21,13 @@ public class BeerController {
     public ResponseEntity<BeerDto> saveNewBeer(@RequestBody BeerDto beerDto){
         //todo impl
         beerDto.setId(UUID.randomUUID());
-        return ResponseEntity.ok().body(beerDto);
+        return ResponseEntity.created(
+                URI.create("/api/v1/beers/" + beerDto.getId())
+        ).body(beerDto);
     }
 
     @PutMapping("/{beer-id}")
     public ResponseEntity<?> updateBeer(@PathVariable("beer-id") UUID id, @RequestBody BeerDto beerDto){
-
         //todo impl
         return ResponseEntity.noContent().build();
     }
